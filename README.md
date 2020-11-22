@@ -6,10 +6,10 @@ And the textcnn code refer the repo https://github.com/norybaby/sentiment_analys
 
 # Train Model
 
-1. if you want train with **baseline**,you can use this `train(None)`,by default parameters.if want to change parameters,you can change parametes as what you want.
-2. if you want train with **fgsm**,you can use this `train(None, mode='fgsm')`,by default parameters.if want to change parameters,you can change parametes as what you want.
-3. if you want train with **pgd**,you can use this `train(None, mode='pgd')`,by default parameters.if want to change parameters,you can change parametes as what you want.
-4. if you want train with **free**,you can use this `train(None, is_free=True, mode='free')`,by default parameters.if want to change parameters,you can change parametes as what you want.
+1. if you want to train with **baseline**,you can use this `train(None)` by default parameters.if want to change parameters,you can change parametes as what you want.
+2. if you want to train with **fgsm**,you can use this `train(None, mode='fgsm')` by default parameters.if want to change parameters,you can change parametes as what you want.
+3. if you want to train with **pgd**,you can use this `train(None, mode='pgd')` by default parameters.if want to change parameters,you can change parametes as what you want.
+4. if you want to train with **free**,you can use this `train(None, is_free=True, mode='free')` by default parameters.if want to change parameters,you can change parametes as what you want.
 
 # Result
 
