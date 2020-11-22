@@ -6,9 +6,10 @@ And the textcnn code refer the repo https://github.com/norybaby/sentiment_analys
 
 # Train Model
 
-1. if you want train with **fgsm and pgd**,you can use this `train(None)`,and you should set method in textcnn.py with `self.attack_with_fgsm(embedded_chars)`  or `self.attack_with_pgd(embedded_chars)` by default parameters.if want to change parameters,you can change parametes as what you want.
-
-2. if you want to train with **free**,you can use this` train(None, is_free=True)` by defalult parameters, and you sholud set method in textcnn with `self.attack_with_fgsm(embedded_chars, is_free=self.is_free) `by default parameters.if want to change parameters,you can change parametes as what you want.
+1. if you want train with **baseline**,you can use this `train(None)`,by default parameters.if want to change parameters,you can change parametes as what you want.
+2. if you want train with **fgsm**,you can use this `train(None, mode='fgsm')`,by default parameters.if want to change parameters,you can change parametes as what you want.
+3. if you want train with **pgd**,you can use this `train(None, mode='pgd')`,by default parameters.if want to change parameters,you can change parametes as what you want.
+4. if you want train with **free**,you can use this `train(None, is_free=True, mode='free')`,by default parameters.if want to change parameters,you can change parametes as what you want.
 
 # Result
 

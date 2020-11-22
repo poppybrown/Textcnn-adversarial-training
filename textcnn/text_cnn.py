@@ -11,7 +11,7 @@ class TextCNN(object):
     def __init__(
             self, w2v_model, sequence_length, num_classes, vocab_size,
             embedding_size, filter_sizes, num_filters, l2_reg_lambda=0.0, sess=None, epsilon=8 / 255, alpha=10 / 255,
-            k=5, is_free=False):
+            k=5, is_free=False, mode='fgsm'):
         self.l2_reg_lambda = l2_reg_lambda
         self.filter_sizes = filter_sizes
         self.num_classes = num_classes
@@ -36,16 +36,21 @@ class TextCNN(object):
             name="word_embeddings")  # 1
         embedded_chars = tf.nn.embedding_lookup(self.W, self.input_x)
         embedded_chars_expanded = tf.expand_dims(embedded_chars, -1)
-        self.scores, _, self.l2_loss = self.inference(embedded_chars_expanded, self.l2_loss)
+        self.scores, self.predictions, self.l2_loss = self.inference(embedded_chars_expanded, self.l2_loss)
         losses = tf.nn.softmax_cross_entropy_with_logits(logits=self.scores,
                                                          labels=self.input_y)
         self.loss = tf.reduce_mean(losses) + self.l2_reg_lambda * self.l2_loss
-        # FGSM算法
-        # self.attack_with_fgsm(embedded_chars)
-        # free算法
-        self.attack_with_fgsm(embedded_chars, is_free=self.is_free)
-        # pgd算法
-        # self.attack_with_pgd(embedded_chars)
+        correct_predictions = tf.equal(self.predictions, tf.argmax(self.input_y, 1))
+        self.accuracy = tf.reduce_mean(tf.cast(correct_predictions, "float"), name="accuracy")
+        if mode == 'fgsm':
+            # FGSM算法
+            self.attack_with_fgsm(embedded_chars)
+        elif mode == 'free':
+            # free算法
+            self.attack_with_fgsm(embedded_chars, is_free=self.is_free)
+        elif mode == 'pgd':
+            # pgd算法
+            self.attack_with_pgd(embedded_chars)
 
     def attack_with_pgd(self, embedded_chars, epsilon=8 / 255, alpha=10 / 255, k=5):
         for i in range(k):

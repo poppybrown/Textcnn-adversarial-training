@@ -76,7 +76,7 @@ def load_data(w2v_model):
     return x_train, x_dev, y_train, y_dev, vocab_size
 
 
-def train(w2v_model, epsilon=8 / 255, alpha=10 / 255, K=5, is_free=False):
+def train(w2v_model, epsilon=8 / 255, alpha=10 / 255, K=5, is_free=False, mode=None):
     # Training
     # ==================================================
     x_train, x_dev, y_train, y_dev, vocab_size = load_data(w2v_model)
@@ -96,7 +96,7 @@ def train(w2v_model, epsilon=8 / 255, alpha=10 / 255, K=5, is_free=False):
                 filter_sizes=list(map(int, FLAGS.filter_sizes.split(","))),
                 num_filters=FLAGS.num_filters,
                 l2_reg_lambda=FLAGS.l2_reg_lambda,
-                sess=sess)
+                sess=sess, mode=mode)
 
             # Define Training procedure
             global_step = tf.Variable(0, name="global_step", trainable=False)
@@ -273,6 +273,11 @@ def fastF1(result, predict, num_classes: int):
 
 
 if __name__ == "__main__":
+    # baseline
     # train(None)
-    ## free
-    train(None, is_free=True)
+    # fgsm
+    # train(None, mode='fgsm')
+    # pgd
+    # train(None, mode='pgd')
+    # free
+    train(None, is_free=True, mode='free')
